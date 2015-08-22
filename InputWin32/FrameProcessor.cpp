@@ -89,9 +89,14 @@ void FrameProcessor::FrameProcessorIn(int Id, unsigned char* Data, int DataLen)
 			else
 			{
 				memcpy(&mParam.mData.TParam, Data, DataLen);
+				mNowProcID++;
+				mParam.NowID = mNowProcID;
+				mParam.MaxID = mMaxProcID;
 				setStateReport(ECHO_READ_SUCCESS, (unsigned char*)&mParam, sizeof(INFO_DATA));
 #if _DEBUG_
 				cout << " Recv End ID [" << mNowID << "]"<<endl;
+				cout << "mNowId 0x" << setw(2) << setfill('0') << hex << (int)mNowProcID << endl;
+				cout << "mMaxId 0x" << setw(2) << setfill('0') << hex << (int)mMaxProcID << endl;
 #endif
 				mNowID = FRAME_ID_NONE;
 				mParamNowIndex = 1;
@@ -110,6 +115,11 @@ static void DistributeReport (void* Param, int Id, int Cmd, int Ack, unsigned ch
 			if (mFrameProcessor != NULL){
 				mFrameProcessor->FrameProcessorIn(Id, Data, DataLen);
 			}
+			break;
+
+		case COMMAND_GETPACKINFO:
+			mFrameProcessor->mNowProcID = 0;
+			mFrameProcessor->mMaxProcID = (int)Data[0];
 			break;
 			
 		default:

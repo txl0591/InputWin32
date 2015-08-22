@@ -30,6 +30,7 @@
 
 /* FrameCommond */
 #define COMMAND_SENDPACK     0x01
+#define COMMAND_GETPACKINFO  0x02
 
 /* FrameCommondEcho */
 #define ECHO_OK 			 0x00

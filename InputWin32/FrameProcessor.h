@@ -56,6 +56,10 @@ public:
 	void setStateReport(int Echo, unsigned char* Data, int DataLen);
 	void FrameProcessorIn(int Id, unsigned char* Data, int DataLen);
 
+public:
+	int mNowProcID;
+	int mMaxProcID;
+
 private: 
 	OnEchoReportListener mOnEchoReportListener;
 	FrameRecv mFrameRecv;
